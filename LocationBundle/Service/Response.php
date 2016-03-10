@@ -34,7 +34,7 @@ class Response implements \IteratorAggregate
      */
     public function __construct($response)
     {
-        $this->parse(json_decode($response, true));
+        $this->parse((array) json_decode($response, true));
     }
 
     /**
