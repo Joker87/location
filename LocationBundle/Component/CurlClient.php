@@ -134,7 +134,6 @@ class CurlClient
 
         if (0 === strpos($url, 'https')) {
             $options += array(
-                CURLOPT_SSLVERSION => 3,
                 CURLOPT_SSL_VERIFYHOST => false,
                 CURLOPT_SSL_VERIFYPEER => false,
             );
