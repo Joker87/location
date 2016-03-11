@@ -1,0 +1,10 @@
+services:
+  location.curl_client:
+    class: Guzzle\Http\Client
+    arguments:
+      - %location_service_host%
+
+  location.service_client:
+    class: LocationBundle\Service\Client
+    arguments:
+      - @location.curl_client

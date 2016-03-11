@@ -1,5 +1,5 @@
 <?php
-namespace LocationBundle\Service;
+namespace LocationBundle\Location;
 
 /**
  * Class LocationIterator
@@ -20,7 +20,7 @@ class LocationIterator implements \Iterator
      * LocationIterator constructor.
      * @param Response $response
      */
-    public function __construct(Response $response)
+    public function __construct(LocationCollection $response)
     {
         $this->response = $response;
     }

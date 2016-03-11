@@ -1,5 +1,6 @@
 <?php
-namespace LocationBundle\Service;
+namespace LocationBundle\Location;
+use LocationBundle\Exception\InvalidCoordinatesException;
 
 /**
  * Class Coordinates
@@ -41,5 +42,18 @@ class Coordinates
     public function getLng()
     {
         return $this->lng;
+    }
+
+    /**
+     * @param array $data
+     * @return Coordinates
+     * @throws InvalidCoordinatesException
+     */
+    public static function create(array $data)
+    {
+        if (!isset($data['lat'], $data['long'])) {
+            throw new InvalidCoordinatesException('Invalid location format');
+        }
+        return new self($data['lat'], $data['long']);
     }
 }

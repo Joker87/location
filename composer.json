@@ -14,7 +14,8 @@
     "require": {
         "php": ">=5.5",
         "symfony/http-kernel": "~2.8|~3.0",
-        "symfony/twig-bridge": "~2.8|~3.0"
+        "symfony/twig-bridge": "~2.8|~3.0",
+        "misd/guzzle-bundle": "~1.0"
     },
     "require-dev": {
         "symfony/config": "~2.8|~3.0",

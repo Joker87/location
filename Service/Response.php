@@ -9,7 +9,9 @@
 namespace LocationBundle\Service;
 
 
-class Response implements \IteratorAggregate
+use LocationBundle\Location\LocationCollection;
+
+class Response
 {
     /**
      * @var bool
@@ -24,23 +26,15 @@ class Response implements \IteratorAggregate
      */
     private $errorCode;
     /**
-     * @var array
+     * @var LocationCollection
      */
-    private $locations = [];
+    private $locations;
 
     /**
      * Response constructor.
-     * @param string $response
-     */
-    public function __construct($response)
-    {
-        $this->parse((array) json_decode($response, true));
-    }
-
-    /**
      * @param array $data
      */
-    private function parse(array $data)
+    public function __construct(array $data)
     {
         if (!isset($data['success'], $data['data'])) {
             throw new \LogicException('Invalid response format');
@@ -48,7 +42,7 @@ class Response implements \IteratorAggregate
         $this->success = $data['success'];
 
         if ($this->isSuccess()) {
-            $this->locations = $data['data']['locations'];
+            $this->locations = new LocationCollection($data['data']['locations']);
         } else {
             $this->errorMessage = $data['data']['message'];
             $this->errorCode = $data['data']['code'];
@@ -56,11 +50,11 @@ class Response implements \IteratorAggregate
     }
 
     /**
-     * @return LocationIterator
+     * @return LocationCollection
      */
-    public function getIterator()
+    public function getLocations()
     {
-        return new LocationIterator($this);
+        return $this->locations;
     }
 
     /**
@@ -85,23 +79,5 @@ class Response implements \IteratorAggregate
     public function getErrorCode()
     {
         return $this->errorCode;
-    }
-
-    /**
-     * @param $index
-     * @return Location
-     */
-    public function getLocation($index)
-    {
-        return $this->hasLocation($index) ? new Location($this->locations[$index]) : null;
-    }
-
-    /**
-     * @param int $index
-     * @return bool
-     */
-    public function hasLocation($index)
-    {
-        return isset($this->locations[$index]);
     }
 }
