@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: maks
- * Date: 10.03.16
- * Time: 22:07
- */
-
 namespace LocationBundle\Service;
 
 
 use LocationBundle\Location\LocationCollection;
 
+/**
+ * Class Response
+ * @package LocationBundle\Service
+ */
 class Response
 {
     /**
@@ -39,9 +36,9 @@ class Response
         if (!isset($data['success'], $data['data'])) {
             throw new \LogicException('Invalid response format');
         }
-        $this->success = $data['success'];
+        $this->success = (bool) $data['success'];
 
-        if ($this->isSuccess()) {
+        if ($this->success) {
             $this->locations = new LocationCollection($data['data']['locations']);
         } else {
             $this->errorMessage = $data['data']['message'];
